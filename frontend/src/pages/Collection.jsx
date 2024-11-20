@@ -22,6 +22,7 @@ const Collection = () => {
   }
 
   const toggleSubCategory = (e) => {
+
     if (subCategory.includes(e.target.value)) {
       setSubCategory(prev=> prev.filter(item => item !==e.target.value))
     }
@@ -31,18 +32,19 @@ const Collection = () => {
   }
 
   const applyFilter = () => {
+
     let productsCopy = products.slice();
 
     if (category.length > 0) {
-      productsCopy = productsCopy.filter(item => category.includes(item.category))
+      productsCopy = productsCopy.filter(item => category.includes(item.category));
+    }
+
+    if (subCategory.length > 0) {
+      productsCopy = productsCopy.filter(item => subCategory.includes(item.subCategory));
     }
 
     setFilterProducts(productsCopy)
   }
-
-  useEffect(()=>{
-    setFilterProducts(products);
-  },[])
 
   useEffect(()=>{
     applyFilter();
@@ -93,7 +95,7 @@ const Collection = () => {
         <div className='flex justify-between text-base sm:text-2xl mb-b'>
           <Title text1={'ALL'} text2={'COLLECTIONS'} />
           {/* Product Sort */}
-          <select className='border-2 borfer-gray-300 text-sm px-2'>
+          <select className='border-2 border-gray-300 text-sm px-2 mb-3'>
             <option value="relevant">Sort by: Relevant</option>
             <option value="low-high">Sort by: Low to High</option>
             <option value="high-low">Sort by: High to Low</option>
