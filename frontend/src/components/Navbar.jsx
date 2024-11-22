@@ -34,7 +34,9 @@ const Navbar = () => {
         </ul>
 
         <div className='flex items-center gap-6'>
+        <Link to="/collection">
             <img onClick={()=>setShowSearch(true)} src={assets.search_icon} className='w-5 cursor-pointer' alt="search icon" />
+        </Link>
             <div className='group relative'>
                 <img className='w-5 cursor-pointer' src={assets.profile_icon} alt="profile icon" />
                 <div className='group-hover:block hidden absolute dropdown-menu right-0 pt-4'>
