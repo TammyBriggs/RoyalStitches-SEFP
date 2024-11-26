@@ -15,8 +15,7 @@ const addToCart = async (req,res) => {
             }
             else {
                 cartData[itemId][size] = 1
-            }console.log(error);
-        res.json({success:false, message:error.message})
+            }
         } else {
             cartData[itemId] = {}
             cartData[itemId][size] = 1
