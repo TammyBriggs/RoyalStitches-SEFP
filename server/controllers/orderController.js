@@ -3,51 +3,56 @@ import userModel from "../models/userModel.js";
 
 // Placing orders using COD Method
 const placeOrder = async (req, res) => {
-    try {
-        const { userId, items, amount, address } = req.body;
+  try {
+    const { userId, items, amount, address } = req.body;
 
-        const orderData = {
-            userId,
-            items,
-            address,
-            amount,
-            paymentMethod:"COD",
-            payment:false,
-            date: Date.now()
-        }
+    const orderData = {
+      userId,
+      items,
+      address,
+      amount,
+      paymentMethod: "COD",
+      payment: false,
+      date: Date.now(),
+    };
 
-        const newOrder = new OrderModel(orderData)
-        await newOrder.save()
+    const newOrder = new OrderModel(orderData);
+    await newOrder.save();
 
-        await userModel.findByIdAndUpdate(userId,{cartData:{}})
+    await userModel.findByIdAndUpdate(userId, { cartData: {} });
 
-        res.json({success:true,message:'Order Placed'})
-
-    } catch (error) {
-        console.log(error);
-        res.json({success:false,message:error.message})
-    }
+    res.json({ success: true, message: "Order Placed" });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
 };
 
 // Placing orders using Stripe Method
 const placeOrderStripe = async (req, res) => {};
 
 // All Orders data for Admin Panel
-const allOrders = async (req, res) => {};
+const allOrders = async (req, res) => {
+  try {
+    const orders = await OrderModel.find({});
+    res.json({ success: true, orders });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
 
 // User Order Data for Frontend
 const userOrders = async (req, res) => {
-    try {
-        
-        const { userId } = req.body
+  try {
+    const { userId } = req.body;
 
-        const orders = await OrderModel.find({ userId })
-        res.json({success:true,orders})
-
-    } catch (error) {
-        console.log(error);
-        res.json({success:false,message:error.message})
-    }
+    const orders = await OrderModel.find({ userId });
+    res.json({ success: true, orders });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
 };
 
 // Update Order Status from Admin Panel
