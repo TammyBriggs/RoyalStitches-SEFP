@@ -6,12 +6,11 @@ import Stripe from 'stripe'
 const currency = 'usd'
 const deliveryCharge = 10
 
-
 // Gateway Initialize
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 // Placing orders using COD Method
-const placeOrder = async (req, res) => {
+const placeOrder = async (req,res) => {
   try {
     const { userId, items, amount, address } = req.body;
 
@@ -38,7 +37,7 @@ const placeOrder = async (req, res) => {
 };
 
 // Placing orders using Flutterwave Method
-const placeOrderStripe = async (req, res) => {
+const placeOrderStripe = async (req,res) => {
   try {
     
     const { userId, items, amount, address } = req.body;
