@@ -80,6 +80,11 @@ const PlaceOrder = () => {
           }
           break;
 
+        case 'stripe':
+
+
+          break;
+
         default:
           break;
       }
