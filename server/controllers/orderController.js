@@ -36,7 +36,7 @@ const placeOrder = async (req,res) => {
   }
 };
 
-// Placing orders using Flutterwave Method
+// Placing orders using Stripe Method
 const placeOrderStripe = async (req,res) => {
   try {
     
@@ -93,6 +93,26 @@ const placeOrderStripe = async (req,res) => {
   }
 };
 
+// Verify Stripe
+const verifyStripe = async (req,res) => {
+  const { orderId, success, userId } = req.body
+
+  try {
+    if (success === "true") {
+      await OrderModel.findByIdAndUpdate(orderId, {payment:true})
+      await userModel.findByIdAndUpdate(userId, {cartData: {}})
+      res.json({success: true});
+    } else {
+      await OrderModel.findByIdAndDelete(orderId)
+      res.json({success:false})
+    }
+
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+}
+
 
 // All Orders data for Admin Panel
 const allOrders = async (req, res) => {
@@ -131,4 +151,4 @@ const updateStatus = async (req, res) => {
     }
 };
 
-export { placeOrder, placeOrderStripe, allOrders, userOrders, updateStatus };
+export { verifyStripe, placeOrder, placeOrderStripe, allOrders, userOrders, updateStatus };
