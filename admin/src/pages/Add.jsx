@@ -31,7 +31,6 @@ const Add = ({token}) => {
       formData.append("subCategory",subCategory)
       formData.append("bestseller",bestseller)
       formData.append("sizes",JSON.stringify(sizes))
-
       image1 && formData.append("image1",image1)
       image2 && formData.append("image2",image2)
       image3 && formData.append("image3",image3)
