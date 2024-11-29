@@ -1,36 +1,45 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { ShopContext } from '../context/ShopContext'
-import Title from './Title';
-import ProductItem from './ProductItem';
+import React, { useContext, useEffect, useState } from 'react';
+import { ShopContext } from '../context/ShopContext'; // Importing the context to access shop data globally.
+import Title from './Title'; // Importing the Title component for displaying section titles.
+import ProductItem from './ProductItem'; // Importing the ProductItem component for rendering individual product details.
 
 const BestSeller = () => {
+    const { products } = useContext(ShopContext); // Destructuring products from the ShopContext.
+    const [bestSeller, setBestSeller] = useState([]); // State to store the list of best-selling products.
 
-    const {products} = useContext(ShopContext);
-    const [bestSeller,setBestSeller] = useState([]);
+    useEffect(() => {
+        // Filter the products to only include those marked as "bestseller".
+        const bestProduct = products.filter((item) => item.bestseller);
+        setBestSeller(bestProduct.slice(0, 5)); // Take the first 5 best-selling products for display.
+    }, [products]); // Dependency array ensures this effect runs whenever the products array changes.
 
-    useEffect(()=>{
-        const bestProduct = products.filter((item)=>(item.bestseller))
-        setBestSeller(bestProduct.slice(0,5))
-    },[products])
+    return (
+        <div className='my-10'>
+            {/* Section Header */}
+            <div className='text-center text-3xl py-8'>
+                <Title text1={'BEST'} text2={'SELLERS'} /> {/* Dynamic section title */}
+                <p className='w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600'>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p> {/* Placeholder text for description */}
+            </div>
 
-  return (
-    <div className='my-10'>
-        <div className='text-center text-3xl py-8'>
-            <Title text1={'BEST'} text2={'SELLERS'} />
-            <p className='w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
+            {/* Display the Best-Selling Products */}
+            <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6'>
+                {
+                    bestSeller.map((item, index) => (
+                        // Render a ProductItem component for each best-selling product.
+                        <ProductItem 
+                            key={index} // Unique key for React rendering optimization.
+                            id={item._id} // Pass product ID as a prop.
+                            name={item.name} // Pass product name as a prop.
+                            image={item.image} // Pass product image URL as a prop.
+                            price={item.price} // Pass product price as a prop.
+                        />
+                    ))
+                }
+            </div>
         </div>
+    );
+};
 
-        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6'>
-            {
-                bestSeller.map((item,index)=>(
-                    <ProductItem key={index} id={item._id} name={item.name} image={item.image} price={item.price} />
-                ))
-            }
-        </div>
-    </div>
-  )
-}
-
-export default BestSeller
+export default BestSeller; // Export the BestSeller component for use in other parts of the application.
