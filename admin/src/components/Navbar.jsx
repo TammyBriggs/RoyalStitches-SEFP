@@ -1,13 +1,25 @@
-import React from 'react'
-import {assets} from '../assets/assets'
+import React from 'react'; // Importing React for building components
+import { assets } from '../assets/assets'; // Importing assets, such as the logo
 
-const Navbar = ({setToken}) => {
+// Navbar Component: Displays a navigation bar with a logo and logout button
+const Navbar = ({ setToken }) => {
   return (
     <div className='flex items-center py-2 px-[4%] justify-between'>
-        <img className='w-[max(10%,80px)]' src={assets.logo} alt="logo" />
-        <button onClick={()=>setToken('')} className='bg-gray-600 text-white px-5 py-2 sm:px-7 sm:py-2 rounded-full text-xs sm:text-sm active:bg-red-700'>Logout</button>
+        {/* Logo section */}
+        <img 
+            className='w-[max(10%,80px)]' 
+            src={assets.logo} 
+            alt="logo" 
+        />
+        {/* Logout button */}
+        <button 
+            onClick={() => setToken('')} // Clears the token to log out
+            className='bg-gray-600 text-white px-5 py-2 sm:px-7 sm:py-2 rounded-full text-xs sm:text-sm active:bg-red-700'
+        >
+            Logout
+        </button>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar; // Exporting the Navbar component
